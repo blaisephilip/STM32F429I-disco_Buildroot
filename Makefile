@@ -4,12 +4,15 @@ system_image = stm32f769i-disco_system.uImage
 dir_download = downloads
 dir_configs = configs
 dir_buildroot = buildroot
+dir_patches = patches
 
 bootstrap:
 	mkdir -p $(dir_download)
 	mkdir -p $(dir_buildroot)
 	wget -O $(dir_download)/$(archive_buildroot) $(url_buildroot)
 	tar zxvf $(dir_download)/$(archive_buildroot) -C $(dir_buildroot) --strip-components=1
+	#mkdir $(dir_buildroot)/package/m4/fflush
+	cp -avr $(dir_patches)/fflush/* $(dir_buildroot)/package/m4
 	cp $(dir_configs)/buildroot $(dir_buildroot)/.config
 
 build:
